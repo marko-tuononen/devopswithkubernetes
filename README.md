@@ -1,2 +1,2 @@
 # devopswithkubernetes
-Exercises for the DevOps with Docker 2021 course.
+Tasks for the [DevOps with Kubernetes course](https://devopswithkubernetes.com/).
