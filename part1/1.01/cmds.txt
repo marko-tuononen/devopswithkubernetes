@@ -1,0 +1,70 @@
+marko@arthur 1.01 % docker build . -t markotuononen/log_output && docker push markotuononen/log_output  
+[+] Building 1.6s (10/10) FINISHED                                                                                                                                                                                                                                              
+ => [internal] load build definition from Dockerfile                                                                                                                                                                                                                       0.0s
+ => => transferring dockerfile: 244B                                                                                                                                                                                                                                       0.0s
+ => [internal] load .dockerignore                                                                                                                                                                                                                                          0.0s
+ => => transferring context: 2B                                                                                                                                                                                                                                            0.0s
+ => [internal] load metadata for docker.io/library/python:3.7                                                                                                                                                                                                              1.4s
+ => [auth] library/python:pull token for registry-1.docker.io                                                                                                                                                                                                              0.0s
+ => [internal] load build context                                                                                                                                                                                                                                          0.0s
+ => => transferring context: 35B                                                                                                                                                                                                                                           0.0s
+ => [1/4] FROM docker.io/library/python:3.7@sha256:d9abbc0737ff8d23a546859c85903f1b8235a1495a405d5a47cbc55747f27b20                                                                                                                                                        0.0s
+ => CACHED [2/4] RUN useradd --create-home appuser                                                                                                                                                                                                                         0.0s
+ => CACHED [3/4] ADD log_output.py /home/appuser/                                                                                                                                                                                                                          0.0s
+ => CACHED [4/4] WORKDIR /home/appuser                                                                                                                                                                                                                                     0.0s
+ => exporting to image                                                                                                                                                                                                                                                     0.0s
+ => => exporting layers                                                                                                                                                                                                                                                    0.0s
+ => => writing image sha256:0a5dfc9eeef7948d66f4351b169f60681ed1754874f9e36713d23d7bd4dc9da2                                                                                                                                                                               0.0s
+ => => naming to docker.io/markotuononen/log_output                                                                                                                                                                                                                        0.0s
+Using default tag: latest
+The push refers to repository [docker.io/markotuononen/log_output]
+5f70bf18a086: Layer already exists 
+a41dff8ca584: Layer already exists 
+1460a9eab8d4: Layer already exists 
+5e35b3a4c86f: Layer already exists 
+7bbc35c59081: Layer already exists 
+2fbc97bf885e: Layer already exists 
+dbf3773c055c: Layer already exists 
+fef6f293382e: Layer already exists 
+ffd50287b468: Layer already exists 
+cba7a92f211b: Layer already exists 
+fe09b9981fd2: Layer already exists 
+dd5b48ca5196: Layer already exists 
+latest: digest: sha256:0fcfe9235af61d81718d7c73034bdf3eb273a759f3d3cc6f38a21e252422c7a1 size: 2839
+
+marko@arthur 1.01 % kubectl create deployment log-output-dep --image=markotuononen/log_output
+deployment.apps/log-output-dep created
+marko@arthur 1.01 % kubectl get deployments
+NAME                READY   UP-TO-DATE   AVAILABLE   AGE
+hashgenerator-dep   1/1     1            1           41m
+log-output-dep      1/1     1            1           4m20s
+marko@arthur 1.01 % kubectl get pods                                                                    
+NAME                                 READY   STATUS    RESTARTS   AGE
+hashgenerator-dep-5f67bd4db8-rtnhg   1/1     Running   0          41m
+log-output-dep-69dd466f9b-vrr2v      1/1     Running   5          4m32s
+marko@arthur 1.01 % kubectl logs -f log-output-dep-69dd466f9b-vrr2v
+2022-01-03 10:23:00 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:23:05 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:23:10 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:23:15 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:23:20 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:23:25 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:23:30 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:23:35 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:23:40 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:23:45 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:23:50 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:23:55 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:24:00 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:24:05 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:24:10 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:24:15 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:24:20 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:24:25 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:24:30 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:24:35 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:24:40 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:24:45 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:24:50 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+2022-01-03 10:24:55 INFO     c6f52015-c36f-4ad6-b01c-cd8024abdd7f
+

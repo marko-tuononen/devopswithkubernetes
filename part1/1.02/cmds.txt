@@ -1,0 +1,56 @@
+marko@arthur 1.02 % docker build . -t markotuononen/todo-app && docker push markotuononen/todo-app
+[+] Building 0.7s (11/11) FINISHED                                                                                                                                                                                                                                              
+ => [internal] load build definition from Dockerfile                                                                                                                                                                                                                       0.0s
+ => => transferring dockerfile: 37B                                                                                                                                                                                                                                        0.0s
+ => [internal] load .dockerignore                                                                                                                                                                                                                                          0.0s
+ => => transferring context: 34B                                                                                                                                                                                                                                           0.0s
+ => [internal] load metadata for docker.io/library/node:16                                                                                                                                                                                                                 0.6s
+ => [1/6] FROM docker.io/library/node:16@sha256:32605ead97ed57bd39a8a7b0e919240e1a3218974dfc6965e61b54a801753131                                                                                                                                                           0.0s
+ => [internal] load build context                                                                                                                                                                                                                                          0.0s
+ => => transferring context: 101B                                                                                                                                                                                                                                          0.0s
+ => CACHED [2/6] RUN useradd --create-home appuser                                                                                                                                                                                                                         0.0s
+ => CACHED [3/6] WORKDIR /home/appuser                                                                                                                                                                                                                                     0.0s
+ => CACHED [4/6] ADD package*.json /home/appuser/                                                                                                                                                                                                                          0.0s
+ => CACHED [5/6] RUN npm install                                                                                                                                                                                                                                           0.0s
+ => CACHED [6/6] ADD server.js /home/appuser/                                                                                                                                                                                                                              0.0s
+ => exporting to image                                                                                                                                                                                                                                                     0.0s
+ => => exporting layers                                                                                                                                                                                                                                                    0.0s
+ => => writing image sha256:ac59f21ac926503fa74a3ac4cf8206d4db9fc89abed83ed53e106efcbae2a2ae                                                                                                                                                                               0.0s
+ => => naming to docker.io/markotuononen/todo-app                                                                                                                                                                                                                          0.0s
+Using default tag: latest
+The push refers to repository [docker.io/markotuononen/todo-app]
+2117b9908b32: Pushed 
+d02c38637c9e: Pushed 
+c4fe28b4ef6a: Pushed 
+5f70bf18a086: Mounted from markotuononen/log_output 
+cd15debe92e8: Pushed 
+0f21f9836a19: Mounted from library/node 
+7b1e5b10412e: Mounted from library/node 
+c6096606a11e: Mounted from library/node 
+3b675c5f4e9e: Mounted from library/node 
+af19b140c9cf: Mounted from library/node 
+10efdd2db457: Mounted from library/node 
+375bd4adaf9d: Mounted from library/node 
+4dda7f4f2f48: Mounted from library/node 
+4f72a526aa2b: Mounted from library/node 
+latest: digest: sha256:4b2f98e92feeb324cb85f35087af0064bdd741dfde3a236f4445516f793eeee9 size: 3255
+marko@arthur 1.02 % 
+
+marko@arthur 1.01 % kubectl create deployment log-output-dep --image=markotuononen/log_output
+deployment.apps/log-output-dep created
+
+
+marko@arthur 1.02 % kubectl get deployments                                             
+NAME                READY   UP-TO-DATE   AVAILABLE   AGE
+hashgenerator-dep   1/1     1            1           138m
+log-output-dep      1/1     1            1           101m
+todo-app-dep        1/1     1            1           7m22s
+marko@arthur 1.02 % kubectl get pods       
+NAME                                 READY   STATUS    RESTARTS   AGE
+hashgenerator-dep-5f67bd4db8-rtnhg   1/1     Running   0          138m
+log-output-dep-69dd466f9b-vrr2v      1/1     Running   5          101m
+todo-app-dep-5574c6bcdc-p8hj4        1/1     Running   0          7m27s
+marko@arthur 1.02 % kubectl logs -f todo-app-dep-5574c6bcdc-p8hj4
+Server started in port 8000
+
+

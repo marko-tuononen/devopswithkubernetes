@@ -1,0 +1,29 @@
+marko@arthur 1.03 % kubectl delete -f manifests/deployment.yaml 
+deployment.apps "log-output-dep" deleted
+marko@arthur 1.03 % kubectl apply -f manifests/deployment.yaml
+deployment.apps/log-output-dep created
+marko@arthur 1.03 % kubectl get deployments
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+todo-app-dep     1/1     1            1           19m
+log-output-dep   1/1     1            1           18s
+marko@arthur 1.03 % kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+todo-app-dep-5574c6bcdc-p8hj4     1/1     Running   0          19m
+log-output-dep-56c864c899-gdhg2   1/1     Running   0          31s
+marko@arthur 1.03 % kubectl logs -f log-output-dep-56c864c899-gdhg2
+2022-01-03 12:13:00 INFO     22c07281-7ea3-4567-83e2-8da5aa9427bc
+2022-01-03 12:13:05 INFO     22c07281-7ea3-4567-83e2-8da5aa9427bc
+2022-01-03 12:13:10 INFO     22c07281-7ea3-4567-83e2-8da5aa9427bc
+2022-01-03 12:13:15 INFO     22c07281-7ea3-4567-83e2-8da5aa9427bc
+2022-01-03 12:13:20 INFO     22c07281-7ea3-4567-83e2-8da5aa9427bc
+2022-01-03 12:13:25 INFO     22c07281-7ea3-4567-83e2-8da5aa9427bc
+2022-01-03 12:13:30 INFO     22c07281-7ea3-4567-83e2-8da5aa9427bc
+2022-01-03 12:13:35 INFO     22c07281-7ea3-4567-83e2-8da5aa9427bc
+2022-01-03 12:13:40 INFO     22c07281-7ea3-4567-83e2-8da5aa9427bc
+2022-01-03 12:13:45 INFO     22c07281-7ea3-4567-83e2-8da5aa9427bc
+2022-01-03 12:13:50 INFO     22c07281-7ea3-4567-83e2-8da5aa9427bc
+2022-01-03 12:13:55 INFO     22c07281-7ea3-4567-83e2-8da5aa9427bc
+2022-01-03 12:14:00 INFO     22c07281-7ea3-4567-83e2-8da5aa9427bc
+^C
+marko@arthur 1.03 % 
+

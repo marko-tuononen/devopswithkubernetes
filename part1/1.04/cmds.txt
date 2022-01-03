@@ -1,0 +1,18 @@
+marko@arthur 1.04 % kubectl delete -f manifests/deployment.yaml 
+deployment.apps "todo-app-dep" deleted
+marko@arthur 1.04 % kubectl apply -f manifests/deployment.yaml 
+deployment.apps/todo-app-dep created
+marko@arthur 1.04 % kubectl get deployments                        
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+log-output-dep   1/1     1            1           3m38s
+todo-app-dep     1/1     1            1           12s
+marko@arthur 1.04 % kubectl get pods                               
+NAME                              READY   STATUS        RESTARTS   AGE
+log-output-dep-56c864c899-gdhg2   1/1     Running       0          3m53s
+todo-app-dep-66f96648c-vbbzv      1/1     Running       0          27s
+todo-app-dep-5574c6bcdc-p8hj4     0/1     Terminating   0          23m
+marko@arthur 1.04 % kubectl logs -f todo-app-dep-66f96648c-vbbzv   
+Server started in port 8000
+^C
+marko@arthur 1.04 % 
+
